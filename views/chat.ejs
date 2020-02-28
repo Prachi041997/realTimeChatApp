@@ -67,6 +67,7 @@
 
     btn.addEventListener('click', function(){
         clientIo.emit('new msg', {sender: usr.textContent, msg: textarea.value});
+        textarea.value = '';
     })
 
     clientIo.on('msg', function(message){
