@@ -72,6 +72,7 @@
 
     clientIo.on('msg', function(message){
         msgfield.innerHTML += `<div class="msg"><span class="text-primary">${message.sender}</span> : ${message.msg}</div>`;
+        msgfield.scrollTop = msgfield.scrollHeight;
     })
 
 </script>
