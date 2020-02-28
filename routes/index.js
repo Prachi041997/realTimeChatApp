@@ -59,32 +59,35 @@ router.post('/forgot', function (req, res) {
     var resetToken = token.toString('hex');
     userModel.findOne({ email: req.body.email })
       .then(function (userFound) {
-        userFound.resetToken = resetToken;
-        userFound.resetTime = Date.now() + 8640000;
-        userFound.save()
-          .then(function () {
-            const tp = nm.createTransport({
-              service: "gmail",
-              auth: {
-                user: "mishramanisha925@gmail.com",
-                pass: "1472580369"
+        if(!userFound) res.redirect('/forgot');
+        else{
+          userFound.resetToken = resetToken;
+          userFound.resetTime = Date.now() + 8640000;
+          userFound.save()
+            .then(function () {
+              const tp = nm.createTransport({
+                service: "gmail",
+                auth: {
+                  user: "mishramanisha925@gmail.com",
+                  pass: "1472580369"
+                }
+              });
+  
+              const mailOptions = {
+                from: "Harsh<harshu854@gmail.com>",
+                to: req.body.email,
+                subject: "Testing the nodemailer",
+                text: "reset link : http://" + req.headers.host + "/reset/" + resetToken + '\n\n' + " ignor this mail if not sent by you."
               }
-            });
-
-            const mailOptions = {
-              from: "Harsh<harshu854@gmail.com>",
-              to: req.body.email,
-              subject: "Testing the nodemailer",
-              text: "reset link : http://" + req.headers.host + "/reset/" + resetToken + '\n\n' + " ignor this mail if not sent by you."
-            }
-
-            tp.sendMail(mailOptions, function (err) {
-              if (err) throw err;
-              else {
-                res.send('mail sent')
-              }
-            })
-          })
+  
+              tp.sendMail(mailOptions, function (err) {
+                if (err) throw err;
+                else {
+                  res.send('mail sent')
+                }
+              })
+            }) 
+        }
       })
   });
 })
