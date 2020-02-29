@@ -147,7 +147,7 @@ router.get('/update', isLoggedIn, function (req, res) {
 });
 
 router.post('/uploadpic', upload.single('prfl'), function (req, res) {
-  var addressOfImage = './images/uploads/' + req.file.filename;
+  var addressOfImage = '/images/uploads/' + req.file.filename;
   userModel.findOne({ username: req.session.passport.user })
     .then(function (userFound) {
       userFound.profilePic = addressOfImage;
