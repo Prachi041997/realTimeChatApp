@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const plm = require('passport-local-mongoose');
 
-// mongoose.connect('mongodb://localhost/gfaadbook');
-mongoose.connect('mongodb://admin:admin123@ds121494.mlab.com:21494/gfaadbook');
+// mongoose.connect('mongodb://localhost/realtimechatapp');
+mongoose.connect('mongodb://admine:admine7@ds037368.mlab.com:37368/realtimechatapp')
 
 var userSchema = mongoose.Schema({
   username: String,
